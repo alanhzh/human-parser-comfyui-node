@@ -9,6 +9,7 @@ from .schp import networks
 from .schp.utils.transforms import transform_logits, get_affine_transform
 
 import folder_paths
+import os
 models_path = folder_paths.models_dir
 # schp
 schp_path = os.path.join(models_path, "schp")
@@ -77,13 +78,13 @@ def generate(image, type, device):
   input_size = dataset_settings[type]['input_size']
   aspect_ratio = input_size[1] * 1.0 / input_size[0]
 
+
   if type == 'lip':
     model_path = os.path.join(schp_path, "exp-schp-201908261155-lip.pth")
   elif type == 'atr':
     model_path = os.path.join(schp_path, "exp-schp-201908301523-atr.pth")
   elif type == 'pascal':
     model_path = os.path.join(schp_path, "exp-schp-201908270938-pascal-person-part.pth")
-
 
   model = networks.init_model('resnet101', num_classes=num_classes, pretrained=None)
   state_dict = torch.load(model_path)['state_dict']
